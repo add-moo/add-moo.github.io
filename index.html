@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="description"
+    content="ADD: Physics-Based Motion Imitation with Adversarial Differential Discriminators">
+  <meta name="keywords" content="Robotics, Quadruped, Whole-body Control, Physics-Based Character Animation, Multi-Objective Optimization">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>
+    ADD: Physics-Based Motion Imitation with Adversarial Differential Discriminators
+  </title>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+
+  <script src="https://kit.fontawesome.com/19914a84eb.js" crossorigin="anonymous"></script>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+  <style>
+    .is-size-5-5 {
+      font-size: 1.1rem;
+    }
+  </style>
+</head>
+
+<section class="hero is-link is-fullheight video" style="overflow: hidden; position:relative;">
+  <div class="hero-video" style="height: 100%; width: 177.77777778vh; min-width: 100%;min-height: 56.25vw;">
+    <video playsinline autoplay muted loop>
+      <source src=" ./static/videos/add_web_teaser.mp4" type="video/mp4">
+    </video>
+  </div>
+  <div class="hero-video is-hidden-tablet is-inline-block-mobile"
+    style="height: 154.28571428vw; width: 100%; min-width:64.81481481vh;min-height:100%;">
+    <video playsinline autoplay muted loop>
+      <source src=" ./static/videos/add_web_teaser_small_mobile.mp4" type="video/mp4">
+    </video>
+  </div>
+  <div class="overlay"></div>
+  <!-- Hero head: will stick at the top -->
+  <div class="hero-head is-hidden-mobile">
+    <header class="navbar">
+      <div class="container is-size-5">
+        <div class="navbar-menu">
+          <div class="navbar-end">
+            <a class="navbar-item pl-4 pr-4" href="./static/ADD_SIGGRAPH_ASIA_arxiv.pdf">
+              <span class="icon" style="margin-right:5px;">
+                <img src="./static/images/pdf.svg" alt="PDF" />
+              </span>
+              <span>Paper</span>
+            </a>
+            <a class="navbar-item  pl-4 pr-4" href="https://arxiv.org/abs/2505.04961">
+              <span class="icon" style="margin-right:5px;">
+                <img src="./static/images/arxiv.svg" alt="ArXiv" />
+              </span>
+              <span>arXiv</span> </a>
+            <a href="https://youtu.be/4Bp0q3xHTxE" class="navbar-item  pl-4 pr-4">
+              <span class="icon" style="margin-right:5px;">
+                <img src="./static/images/youtube.svg" alt="Youtube" />
+              </span>
+              <span>Video</span> </a>
+            <span class="navbar-item  pl-4 pr-4">
+              <a class="button is-inverted is-large">
+                <span class="icon">
+                  <i class="fab fa-github"></i>
+                </span>
+                <span>Code (Coming Soon)</span>
+              </a>
+            </span>
+          </div>
+        </div>
+      </div>
+    </header>
+  </div>
+
+  <!-- Hero content: will be in the middle -->
+  <div class="hero-body">
+    <div class="container has-text-centered">
+      <h1 class="title is-1 publication-title is-size-1-mobile" style="font-size: 12rem;">
+        ADD
+      </h1>
+      <h1 class="subtitle is-1 publication-title is-size-4-mobile" style="font-size: 4rem;">
+        Physics-Based Motion Imitation with Adversarial Differential Discriminators
+      </h1>
+      <h1 class="is-2 is-italic is-size-4-mobile" style="font-size: 2rem; opacity: 80%;">
+        SIGGRAPH ASIA 2025
+      </h1>
+      <div class="column has-text-centered is-hidden-tablet">
+        <div class="publication-links">
+          <!-- PDF Link. -->
+          <span class="link-block">
+            <a href="./static/ADD_SIGGRAPH_ASIA_arxiv.pdf" class="external-link button is-normal is-rounded is-dark">
+              <span class="icon">
+                <img src="./static/images/pdf.svg" alt="PDF" />
+              </span>
+              <span>Paper</span>
+            </a>
+          </span>
+          <span class="link-block">
+            <a href="https://arxiv.org/abs/2505.04961" class="external-link button is-normal is-rounded is-dark">
+              <span class="icon">
+                <img src="./static/images/arxiv.svg" alt="ArXiv" />
+              </span>
+              <span>arXiv</span>
+            </a>
+          </span>
+          <!-- Video Link. -->
+          <span class="link-block">
+            <a href="https://youtu.be/4Bp0q3xHTxE" class="external-link button is-normal is-rounded is-dark">
+              <span class="icon">
+                <img src="./static/images/youtube.svg" alt="Youtube" />
+              </span>
+              <span>Video</span>
+            </a>
+          </span>
+          <!-- Code Link. -->
+          <span class="link-block">
+            <a href="https://github.com/real-stanford/umi-on-legs"
+              class="external-link button is-normal is-rounded is-dark">
+              <span class="icon">
+                <i class="fab fa-github"></i>
+              </span>
+              <span>Code</span>
+            </a>
+          </span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Hero footer: will stick at the bottom -->
+  <div class="hero-foot is-hidden-mobile">
+    <nav class="tabs is-boxed is-fullwidth is-size-5">
+      <ul>
+        <li><a href="#overview">Overview</a></li>
+        <li><a href="#motion_imitate">Motion Imitation</a></li>
+        <li><a href="#go1">Training Quadrupeds to Walk</a></li>
+        <li><a href="#how">How Does It Work?</a></li>
+      </ul>
+    </nav>
+  </div>
+</section>
+
+
+<section class="section is-small" id="overview">
+  <div class="container is-max-desktop">
+    <div class="container has-text-centered">
+      <div class="publication-authors is-flex justify-content is-justify-content-space-around is-hidden-mobile">
+        <div class="author-block has-text-centered has-addons-centered">
+          <a href="https://ziyu-charlotte-zhang.github.io/" class="is-size-5">Ziyu Zhang</a><sup>*,1</sup>
+        </div>
+        <div class="author-block has-text-centered has-addons-centered">
+          <a href="https://www.linkedin.com/in/sergey-bashkirov/" class="is-size-5">Sergey Bashkirov</a><sup>*,2</sup>
+        </div>
+        <div class="author-block has-text-centered has-addons-centered">
+          <a href="https://www.linkedin.com/in/dunyang/" class="is-size-5">Dun Yang</a><sup>1</sup>
+        </div>
+        <div class="author-block has-text-centered has-addons-centered">
+          <a href="https://yi-shi94.github.io/" class="is-size-5">Yi Shi</a><sup>1</sup>
+        </div>
+        <div class="author-block has-text-centered has-addons-centered">
+          <a href="https://scholar.google.com/citations?user=KC6FJ14AAAAJ&hl=en" class="is-size-5">Michael Taylor</a><sup>2</sup>
+        </div>
+        <div class="author-block has-text-centered has-addons-centered">
+          <a href="https://xbpeng.github.io/" class="is-size-5">Xue Bin Peng</a><sup>1,3</sup>
+        </div>
+      </div>
+
+      <div class="is-flex is-flex-direction-row is-flex-wrap-wrap is-justify-content-space-evenly is-hidden-tablet">
+        <div class="author-block has-text-centered has-addons-centered">
+          <a href="https://ziyu-charlotte-zhang.github.io/" class="is-size-5-mobile">Ziyu Zhang</a><sup>*,1</sup>
+        </div>
+        <div class="author-block has-text-centered has-addons-centered">
+          <a href="https://www.linkedin.com/in/sergey-bashkirov/" class="is-size-5-mobile">Sergey Bashkirov</a><sup>*,2</sup>
+        </div>
+        <div class="author-block has-text-centered has-addons-centered">
+          <a href="https://www.linkedin.com/in/dunyang/" class="is-size-5-mobile">Dun Yang</a><sup>1</sup>
+        </div>
+        <div class="author-block has-text-centered has-addons-centered">
+          <a href="https://yi-shi94.github.io/" class="is-size-5-mobile">Yi Shi</a><sup>1</sup>
+        </div>
+        <div class="author-block has-text-centered has-addons-centered">
+          <a href="https://scholar.google.com/citations?user=KC6FJ14AAAAJ&hl=en" class="is-size-5-mobile">Michael Taylor</a><sup>2</sup>
+        </div>
+        <div class="author-block has-text-centered has-addons-centered">
+          <a href="https://xbpeng.github.io/" class="is-size-5-mobile">Xue Bin Peng</a><sup>1,3</sup>
+        </div>
+      </div>
+
+      <div class="publication-authors is-size-5">
+        <span class="author-block"><sup>1</sup>Simon Fraser University, </span>
+        <span class="author-block"><sup>2</sup>Sony Playstation, </span>
+        <span class="author-block"><sup>3</sup>NVIDIA, </span>
+        <span class="author-block">*Equal contribution</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section is-medium">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <div class="column is-four-fifths has-text-justified is-hidden-mobile">
+        <h2 class="subtitle ">
+          <strong>Tired of designing and tuning reward functions? ADD can help!</strong> 
+          ADD is an adversarial Multi-Objective Optimization (MOO) solution that is broadly applicable to a range of problems, including motion tracking. 
+          It automatically balances the various objectives, reducing the burden of manual reward engineering and weight tuning.
+          With ADD, designing reward functions can be as simple as calculating the raw errors, and let the discriminator do the heavy lifting of turning them into effective training signals for you!
+          
+        </h2>
+        <br>
+        <h2 class="subtitle">
+          <strong>AND</strong>
+          it is an adversarial framework trained using only <strong>ONE</strong> positive sample.
+        </h2>
+      </div>
+
+      <div class="column is-four-fifths is-hidden-tablet has-text-justified-mobile">
+        <p>
+          <strong>Tired of designing and tuning reward functions? ADD can help!</strong> 
+          ADD is an adversarial Multi-Objective Optimization (MOO) solution that is broadly applicable to a range of problems, including motion tracking. 
+          It automatically balances the various objectives, reducing the burden of manual reward engineering and weight tuning.
+          With ADD, designing reward functions can be as simple as calculating the raw errors, and let the discriminator do the heavy lifting of turning them into effective training signals for you!
+        </p>
+        <br>
+        <p>
+          <strong>AND</strong>
+          it is an adversarial framework trained using only <strong>ONE</strong> positive sample.
+        </p>
+      </div>
+
+
+    </div>
+  </div>
+</section>
+
+
+<section class="section" id="video">
+  <div class="container is-max-desktop">
+    <h2 class="title is-1 has-text-centered is-size-4-mobile">ADD</h2>
+    <iframe width="100%" style="aspect-ratio: 16 / 9;" src="
+      https://www.youtube.com/embed/4Bp0q3xHTxE?si=ocAPm8KVAz-RZK59" title="UMI on Legs Technical Summary Video"
+      frameborder="0"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+      referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+  </div>
+</section>
+
+<section class="section is-small" id="motion_imitate">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <div class="column is-four-fifths">
+
+        <h2 class="title is-1 has-text-centered is-size-4-mobile">Motion Imitation</h2>
+        <div class="content">
+          <p class="is-size-5-5">
+            When applied to physics-based motion imitation, ADD achieves comparable performance to the SOTA motion tracking method, DeepMimic,
+            without the reliance on manual reward engineering.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<video autoplay muted loop playsinline width="100%">
+  <source src="./static/videos/motion_tracking_demo.mp4" type="video/mp4">
+</video>
+<p class="has-text-centered" style="padding-bottom: 10px; font-size: medium;">Blue: ADD |  Green: Reference Motion</p>
+<br>
+
+
+<section class="section is-small" id="umi">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <div class="column is-four-fifths">
+
+        <h2 class="title is-3 has-text-centered is-size-4-mobile">Comparison with Prior Work</h2>
+        <div class="content">
+          <p class="is-size-5-5">
+            While DeepMimic, relying on a set of hand-tuned weights, fails to reproduce the challenging parkour motions (e.g., Climb and Double Kong),
+            ADD is able to successfully imitate these motions and the intricate contacts with the objects without any manual tuning.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <!-- Row 1 -->
+    <div class="columns">
+      <div class="column">
+        <h3 class="title is-3 has-text-centered" style="margin-bottom: 10px; font-size: x-large;"></h3>
+        <video autoplay muted loop playsinline controls src="./static/videos/climb_comparison.mp4" width="100%" style="border-radius:10px;"></video>
+      </div>
+      <div class="column">
+        <h3 class="title is-3 has-text-centered" style="margin-bottom: 10px; font-size: x-large;"></h3>
+        <video autoplay muted loop playsinline controls src="./static/videos/double_kong_comparison.mp4" width="100%" style="border-radius:10px;"></video>
+      </div>
+    </div>
+
+    <!-- Row 2 -->
+    <div class="columns">
+      <div class="column">
+        <h3 class="title is-3 has-text-centered" style="margin-bottom: 10px; font-size: x-large;"></h3>
+        <video autoplay muted loop playsinline controls src="./static/videos/add_web_dancedb.mp4" width="100%" style="border-radius:10px;"></video>
+      </div>
+      <div class="column">
+        <h3 class="title is-3 has-text-centered" style="margin-bottom: 10px; font-size: x-large;"></h3>
+        <video autoplay muted loop playsinline controls src="./static/videos/add_web_lafan.mp4" width="100%" style="border-radius:10px;"></video>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section is-small" id="umi">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <div class="column is-four-fifths">
+
+        <h2 class="title is-3 has-text-centered is-size-4-mobile">Different Character Morphology</h2>
+        <div class="content">
+          <p class="is-size-5-5">
+            With the automatic balancing of objectives, ADD can easily transfer to characters of different morphologies without the need for significant retuning.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="columns">
+      <div class="column">
+        <h3 class="title is-3 has-text-centered" style="margin-bottom: 10px; font-size: x-large;">Walk</h3>
+        <video autoplay muted loop playsinline controls src="./static/videos/eval_walk_demo.mp4" width="100%" style="border-radius:10px;"></video>
+      </div>
+      <div class="column">
+        <h3 class="title is-3 has-text-centered" style="margin-bottom: 10px; font-size: x-large;">Kick</h3>
+        <video autoplay muted loop playsinline controls src="./static/videos/eval_kick_demo.mp4" width="100%" style="border-radius:10px;"></video>
+      </div>
+      <div class="column">
+        <h3 class="title is-3 has-text-centered" style="margin-bottom: 10px; font-size: x-large;">Punch</h3>
+        <video autoplay muted loop playsinline controls src="./static/videos/eval_punch_demo.mp4" width="100%" style="border-radius:10px;"></video>
+      </div>
+    </div>
+  </div>
+  <p class="has-text-centered" style="padding-bottom: 10px; font-size: medium;">Blue: ADD |  Green: Reference Motion</p>
+</section>
+
+<section class="section is-small">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <div class="column has-text-justified is-four-fifths  is-hidden-mobile">
+        <p class="is-size-5-5">
+          Beside motion imitation, ADD is applicable to a variety of multi-objective problems. An example is training a quadruped robot
+          to walk naturally while following steering commands.
+        </p>
+      </div>
+      <div class="column has-text-justified is-four-fifths is-hidden-tablet">
+        <p>
+          Beside motion imitation, ADD is applicable to a variety of multi-objective problems. An example is training a quadruped robot
+          to walk naturally while following steering commands.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section is-small has-text-light" id="go1"  style="background-color: rgba(47, 47, 47, 1);">
+  <div class="container is-max-desktop">
+
+    <h2 class="title is-1 has-text-white  is-size-4-mobile">Training Quadruped Robot to Walk</h2>
+    <div class="content has-text-justified">
+      <p class="is-size-5-5">
+        With ADD, switching between tasks involves less manual engineering, 
+        as it greatly reduces the need to design task-specific rewards and re-tune hyperparameters from scratch.
+      </p>
+    </div>
+
+    <div class="content has-text-justified">
+      <p class="is-size-5-5">
+        This quadruped controller, trained using ADD, demonstrates natural gaits while closely following user-provided steering commands,
+        without the use of reference motions.
+      </p>
+    </div>
+  </div>
+</section>
+
+<video autoplay muted loop playsinline height="100%">
+  <source src="./static/videos/add_web_go1.mp4" type="video/mp4">
+</video>
+
+
+<section class="section is-small" id="how">
+  <div class="container is-max-widescreen">
+    <div class="columns is-centered">
+      <div class="column is-four-fifths is-centered">
+        <h2 class="title is-1 has-text-centered is-size-4-mobile">How Does it Work?</h2>
+
+
+        <div class="content has-text-justified">
+          <p class="is-size-5-5">
+            A common approach to tackling MOO problems is to aggregate the objectives, l<sup>i</sup>(θ), into a weighted sum. 
+            While simple and widely used, it relies on manual weight tuning and can miss nuanced trade-offs.
+          </p>
+          <div class="content has-text-centered">
+            <video autoplay muted loop playsinline controls width="60%" style="border-radius:10px;">
+              <source src="./static/videos/weighted_sum_method_video.mp4" type="video/mp4">
+            </video>
+          </div>       
+          <p class="is-size-5-5">
+            We propose to construct a non-linear aggregation of the objectives using an <i>Adversarial Differential Discriminator (ADD)</i>, 
+            which enables our method to <strong>automatically</strong> learn more <strong>flexible</strong> and <strong>dynamic</strong> combinations of the objectives.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <!-- Row 1 -->
+    <div class="columns">
+      <div class="column">
+        <video autoplay muted loop playsinline controls src="./static/videos/add_neg_samples_method.mp4" width="150%" style="border-radius:10px;"></video>
+      </div>
+      <div class="column">
+        <video autoplay muted loop playsinline controls src="./static/videos/pos_sample_add_method.mp4" width="150%" style="border-radius:10px;"></video>
+      </div>
+    </div>
+  </div>
+  <br>
+
+  <div class="container is-max-widescreen">
+    <div class="columns is-centered">
+      <div class="column is-four-fifths">
+        <div class="content">
+          <p class="is-size-5-5">
+            ADD receives, as negative samples, vectors of losses &Delta;<sub>t</sub>, representing the difference between the policy’s performance and the target. 
+            For motion tracking, &Delta;<sub>t</sub> corresponds directly to the raw, per-frame tracking errors. The only positive sample is the zero vector, 
+            which represents the ideal case of zero error for every objective.
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <!-- Row 1 -->
+    <div class="columns">
+      <div class="column">
+        <video autoplay muted loop playsinline controls src="./static/videos/wo_grad_penalty.mp4" width="100%" style="border-radius:10px;"></video>
+      </div>
+      <div class="column">
+        <video autoplay muted loop playsinline controls src="./static/videos/w_grad_penalty.mp4" width="100%" style="border-radius:10px;"></video>
+      </div>
+    </div>
+  </div>
+  <br>
+
+  <div class="container is-max-widescreen">
+    <div class="columns is-centered">
+      <div class="column is-four-fifths">
+        <div class="content">
+          <p class="is-size-5-5">
+            To avoid the discriminator from overfitting to always assigning score of 1 to the zero vector and 0 to everything else,
+            we introduce a gradient penalty regularizer. This regularization encourages smooth decision boundaries and provides informative gradients for the policy.
+          </p>
+
+          <div style="text-align:center; margin-top:40px; margin-bottom:20px;">
+            <img src="./static/images/add_eqn.png" alt="ADD Eqn" style="width:60%;">
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
+
+  <div class="container is-max-widescreen">
+    <div class="columns is-centered">
+      <div class="column is-four-fifths">
+        <div class="content">
+          <p class="is-size-5-5">
+            During training, the policy (or model in general) adjusts its parameters 𝜃 to drive &Delta;<sub>t</sub> closer to zero to fool the discriminator. 
+            Meanwhile, the discriminator dynamically attends to different objectives and hones in on the more difficult combinations of 
+            objectives to continually challenge the policy.</p>
+          <p class="is-size-5-5">
+            Because of this adaptive interplay, ADD is able to simplify reward function design. For instance, in motion tracking applications, ADD 
+            greatly reduces the number of hyperparameters that need to be carefully tuned.
+          </p>
+          <div style="text-align:center; margin-top:40px; margin-bottom:20px;">
+            <img src="./static/images/add_dm_reward_comp.jpg" alt="ADD Motion Tracking Reward" style="width:80%;">
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Citation -->
+<section class="section is-small">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 is-size-4-mobile">BibTex</h2>
+    <pre class="is-hidden-mobile"><code>@inproceedings{
+        zhang2025ADD,
+        author={Zhang, Ziyu and Bashkirov, Sergey and Yang, Dun and Shi, Yi and Taylor, Michael and Peng, Xue Bin},
+        title = {Physics-Based Motion Imitation with Adversarial Differential Discriminators},
+        year = {2025},
+        booktitle = {SIGGRAPH Asia 2025 Conference Papers (SIGGRAPH Asia '25 Conference Papers)}
+    }</code></pre>
+  </div>
+</section>
+
+
+<footer class="footer">
+  <div class="container">
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+          <p>
+            Website template modified from <a href="https://nerfies.github.io/">NeRFies</a> and <a
+              href="https://huy-ha.github.io/scalingup/">Scaling Up Distilling Down</a> and <a href="https://umi-on-legs.github.io/">UMI on Legs</a>.
+          </p>
+          <p>
+            This website is licensed under a <a rel="license"
+              href="http://creativecommons.org/licenses/by-sa/4.0/">Creative
+              Commons Attribution-ShareAlike 4.0 International License</a>.
+          </p>
+          <p>
+            This means you are free to borrow and modify the <a
+              href="https://github.com/nerfies/nerfies.github.io">source
+              code</a> of this website as long as
+            you link back to the <a href="https://nerfies.github.io/">NeRFies</a> page in the footer.
+            Please remember to remove the analytics code included in the header of the website which
+            you do not want on your website.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+
+</html>
