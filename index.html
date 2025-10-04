@@ -66,14 +66,11 @@
                 <img src="./static/images/youtube.svg" alt="Youtube" />
               </span>
               <span>Video</span> </a>
-            <span class="navbar-item  pl-4 pr-4">
-              <a class="button is-inverted is-large">
-                <span class="icon">
-                  <i class="fab fa-github"></i>
-                </span>
-                <span>Code (Coming Soon)</span>
-              </a>
-            </span>
+            <a class="navbar-item  pl-4 pr-4">
+              <span class="icon" style="margin-right:5px;">
+                <i class="fab fa-github"></i>
+              </span>
+              <span>Code (Coming Soon)</span> </a>
           </div>
         </div>
       </div>
@@ -122,12 +119,12 @@
           </span>
           <!-- Code Link. -->
           <span class="link-block">
-            <a href="https://github.com/real-stanford/umi-on-legs"
+            <a
               class="external-link button is-normal is-rounded is-dark">
               <span class="icon">
                 <i class="fab fa-github"></i>
               </span>
-              <span>Code</span>
+              <span>Code (Coming Soon)</span>
             </a>
           </span>
         </div>
@@ -398,9 +395,11 @@
   </div>
 </section>
 
-<video autoplay muted loop playsinline height="100%">
+<video autoplay muted loop playsinline 
+       style="width:100%; height:auto; display:block;">
   <source src="./static/videos/add_web_go1.mp4" type="video/mp4">
 </video>
+
 
 
 <section class="section is-small" id="how">
@@ -520,7 +519,7 @@
 <!-- Citation -->
 <section class="section is-small">
   <div class="container is-max-desktop">
-    <h2 class="title is-3 is-size-4-mobile">BibTex</h2>
+    <h2 class="title is-3 is-hidden-mobile">BibTex</h2>
     <pre class="is-hidden-mobile"><code>@inproceedings{
         zhang2025ADD,
         author={Zhang, Ziyu and Bashkirov, Sergey and Yang, Dun and Shi, Yi and Taylor, Michael and Peng, Xue Bin},
